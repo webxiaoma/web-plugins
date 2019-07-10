@@ -1,0 +1,29 @@
+{
+  "name": "js-plugins",
+  "version": "1.0.0",
+  "description": "js插件库",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webxiaoma/js-plugins.git"
+  },
+  "keywords": [
+    "js",
+    "plugins",
+    "js-plugins",
+    "插件",
+    "js插件"
+  ],
+  "author": "webxiaoma",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/webxiaoma/js-plugins/issues"
+  },
+  "homepage": "https://github.com/webxiaoma/js-plugins#readme"
+}
