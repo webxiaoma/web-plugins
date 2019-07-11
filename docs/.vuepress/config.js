@@ -10,10 +10,10 @@ module.exports = {
         logo:'https://webxiaoma.com/img/manong.jpg',
         searchMaxSuggestions: 15, // 搜索设置数量
         nav: [  // 导航栏 使用了element 导航
-            { text: 'vue-server', link: '/vue-server/'},
+            { text: 'vue-server', link: '/img-lazy/'},
         ],
         sidebar: {  // 侧边栏
-            "/vue-server/":[
+            "/img-lazy/":[
                "",
                "serv"
             ]

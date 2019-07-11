@@ -1,2 +1,3 @@
-# js-plugins
-js 插件库
+# img-lazy
+
+img-lazy 图片懒加载
