@@ -1,43 +1,45 @@
 /**
  * @name    img-lazy 图片懒加载
  * @vesion  v1.0.0    
- * @author  webwangjia
+ * @author  webwangjia 
+ * @author  webxiaoma
  */
 
-!(function(root,f){
+;(function(root,f){
+    // 环境判断
     if (typeof define === 'function' && define.amd) { //AMD/CMD标准
         define([], f(root))
     } else if (typeof exports === 'object') { //commonjs规范
         module.exports = f(root)
-    } else {
-        root.imgLazy = f(root) // 挂载全局
+    } else { // 浏览器
+        root.ImgLazy = f(root) // 挂载全局
     }
 
 })(this, function (root){
-
-
-
+  
     /**
-     * @msg  imgLazy构造函数
+     * @msg  ImgLazy构造函数
      **/
-    function imgLazy(option){
-            this.options = option || {};// 全局配置
-            this.imgEle = [];
-           
-            
-            return this;
+    function ImgLazy(option){
+        this.options = option || {};// 全局配置
+        this.imgEle = []; // 存储所有图片对象
+
+        this.init() // 调用初始化方法
+        return this;
     }
 
-    imgLazy.prototype.init = function (params) {
-        
+    ImgLazy.prototype.init = function (params) {
+        this.monitorImg()
     }
-    imgLazy.prototype.monitorImg = function() {
+
+    //监听图片
+    ImgLazy.prototype.monitorImg = function() {
         var D = document, // 存储document
         imgEles = D.getElementsByTagName('img')  // 存储页面img dom
 
         for(var i = 0,len=imgEles.length;i<len;i++){
             this.imgEle.push(
-                new Img(imgEles[i],this)
+                new Img(imgEles[i],this) // 传入img元素节点，this指ImgLazy的实例
             )
         }
     }
@@ -45,11 +47,13 @@
     /**
      * @msg  图片构造函数
      **/
-    function Img(node,parent) {
-        this.imgNode = node; // 图片节点
+    function Img(imgNode,parent) {
+        this.imgNode = imgNode; // 图片元素节点
         this.url = ""; // 图片路径
-        this.status = "loading"; // 图片状态 loading success error
-        this.parent = parent;
+        this.status = ""; // 图片状态 loading success error
+        this.parent = parent; // ImgLazy的实例
+        this.options = parent.options;
+        this.init()
     }
 
     // 初始化
@@ -57,19 +61,17 @@
         this.url = this.imgNode.getAttribute("data-url");
     }
 
-
     // load img
     Img.prototype.load = function (params) {
-        
+        this.imgNode.setAttribute("src",this.url)
     }
 
-    ImgPrototype.addEvent = function (params) {
+    Img.prototype.addEvent = function (params) {
         // this.imgNode.addEleventLisenter
         // load error
     }
 
    
 
-    return imgLazy
-})
-
+    return ImgLazy
+});
