@@ -127,7 +127,7 @@ if(typeof(pidCrypt) != 'undefined' &&
           return new BigInteger(ba);
         }
     //RSA key constructor
-    pidCrypt.RSA = function() {
+    var rsa = function() {
       this.n = null;
       this.e = 0;
       this.d = null;
@@ -140,7 +140,7 @@ if(typeof(pidCrypt) != 'undefined' &&
     }
     // protected
     // Perform raw private operation on "x": return x^d (mod n)
-    pidCrypt.RSA.prototype.doPrivate = function(x) {
+    rsa.prototype.doPrivate = function(x) {
       if(this.p == null || this.q == null)
         return x.modPow(this.d, this.n);
 
@@ -155,7 +155,7 @@ if(typeof(pidCrypt) != 'undefined' &&
 
 
     // Set the public key fields N and e from hex strings
-    pidCrypt.RSA.prototype.setPublic = function(N,E,radix) {
+    rsa.prototype.setPublic = function(N,E,radix) {
       if (typeof(radix) == 'undefined') radix = 16;
 
       if(N != null && E != null && N.length > 0 && E.length > 0) {
@@ -170,12 +170,12 @@ if(typeof(pidCrypt) != 'undefined' &&
     }
 
     // Perform raw public operation on "x": return x^e (mod n)
-    pidCrypt.RSA.prototype.doPublic = function(x) {
+    rsa.prototype.doPublic = function(x) {
       return x.modPowInt(this.e, this.n);
     }
 
     // Return the PKCS#1 RSA encryption of "text" as an even-length hex string
-    pidCrypt.RSA.prototype.encryptRaw = function(text) {
+    rsa.prototype.encryptRaw = function(text) {
       var m = pkcs1pad2(text,(this.n.bitLength()+7)>>3);
       if(m == null) return null;
       var c = this.doPublic(m);
@@ -184,14 +184,14 @@ if(typeof(pidCrypt) != 'undefined' &&
       if((h.length & 1) == 0) return h; else return "0" + h;
     }
 
-    pidCrypt.RSA.prototype.encrypt = function(text) {
+    rsa.prototype.encrypt = function(text) {
       //base64 coding for supporting 8bit chars
       text = pidCryptUtil.encodeBase64(text);
       return this.encryptRaw(text)
     }
     // Return the PKCS#1 RSA decryption of "ctext".
     // "ctext" is an even-length hex string and the output is a plain string.
-    pidCrypt.RSA.prototype.decryptRaw = function(ctext) {
+    rsa.prototype.decryptRaw = function(ctext) {
 //     alert('N='+this.n+'\nE='+this.e+'\nD='+this.d+'\nP='+this.p+'\nQ='+this.q+'\nDP='+this.dmp1+'\nDQ='+this.dmq1+'\nC='+this.coeff);
       var c = parseBigInt(ctext, 16);
       var m = this.doPrivate(c);
@@ -199,7 +199,7 @@ if(typeof(pidCrypt) != 'undefined' &&
       return pkcs1unpad2(m, (this.n.bitLength()+7)>>3)
     }
 
-    pidCrypt.RSA.prototype.decrypt = function(ctext) {
+    rsa.prototype.decrypt = function(ctext) {
       var str = this.decryptRaw(ctext)
       //base64 coding for supporting 8bit chars
       str = (str) ? pidCryptUtil.decodeBase64(str) : "";
@@ -208,13 +208,13 @@ if(typeof(pidCrypt) != 'undefined' &&
 
 /*
     // Return the PKCS#1 RSA encryption of "text" as a Base64-encoded string
-    pidCrypt.RSA.prototype.b64_encrypt = function(text) {
+    rsa.prototype.b64_encrypt = function(text) {
       var h = this.encrypt(text);
       if(h) return hex2b64(h); else return null;
     }
 */
     // Set the private key fields N, e, and d from hex strings
-    pidCrypt.RSA.prototype.setPrivate = function(N,E,D,radix) {
+    rsa.prototype.setPrivate = function(N,E,D,radix) {
       if (typeof(radix) == 'undefined') radix = 16;
 
       if(N != null && E != null && N.length > 0 && E.length > 0) {
@@ -227,7 +227,7 @@ if(typeof(pidCrypt) != 'undefined' &&
     }
 
     // Set the private key fields N, e, d and CRT params from hex strings
-    pidCrypt.RSA.prototype.setPrivateEx = function(N,E,D,P,Q,DP,DQ,C,radix) {
+    rsa.prototype.setPrivateEx = function(N,E,D,P,Q,DP,DQ,C,radix) {
         if (typeof(radix) == 'undefined') radix = 16;
 
         if(N != null && E != null && N.length > 0 && E.length > 0) {
@@ -247,7 +247,7 @@ if(typeof(pidCrypt) != 'undefined' &&
     }
 
     // Generate a new random private key B bits long, using public expt E
-    pidCrypt.RSA.prototype.generate = function(B,E) {
+    rsa.prototype.generate = function(B,E) {
       var rng = new SecureRandom();
       var qs = B>>1;
       this.e = parseInt(E,16);
@@ -283,7 +283,7 @@ if(typeof(pidCrypt) != 'undefined' &&
 
 //pidCrypt extensions start
 //
-    pidCrypt.RSA.prototype.getASNData = function(tree) {
+    rsa.prototype.getASNData = function(tree) {
         var params = {};
         var data = [];
         var p=0;
@@ -308,7 +308,7 @@ if(typeof(pidCrypt) != 'undefined' &&
 //                  INTEGER: public exponent
 //              }
 //}
-    pidCrypt.RSA.prototype.setKeyFromASN = function(key,asntree) {
+    rsa.prototype.setKeyFromASN = function(key,asntree) {
        var keys = ['N','E','D','P','Q','DP','DQ','C'];
        var params = {};
 
@@ -335,7 +335,7 @@ if(typeof(pidCrypt) != 'undefined' &&
  * Init RSA Encryption with public key.
  * @param  asntree: ASN1 structure object created from pidCrypt.ASN1.toHexTree
 */
-   pidCrypt.RSA.prototype.setPublicKeyFromASN = function(asntree) {
+   rsa.prototype.setPublicKeyFromASN = function(asntree) {
         this.setKeyFromASN('public',asntree);
 
     }
@@ -344,14 +344,14 @@ if(typeof(pidCrypt) != 'undefined' &&
  * Init RSA Encryption with private key.
  * @param  asntree: ASN1 structure object created from pidCrypt.ASN1.toHexTree
 */
-    pidCrypt.RSA.prototype.setPrivateKeyFromASN = function(asntree) {
+    rsa.prototype.setPrivateKeyFromASN = function(asntree) {
         this.setKeyFromASN('private',asntree);
     }
 /**
  * gets the current paramters as object.
  * @return params: object with RSA parameters
 */
-    pidCrypt.RSA.prototype.getParameters = function() {
+    rsa.prototype.getParameters = function() {
       var params = {}
       if(this.n != null) params.n = this.n;
       params.e = this.e;

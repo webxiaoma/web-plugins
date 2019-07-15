@@ -1,19 +1,28 @@
-;
-(function() {
+/**
+*  base64 for @web-plugins/js-encryption
+**/
 
-    var object = typeof exports != 'undefined' ? exports : this; // #8: web workers
+; (function (root, f) {
+    // 环境判断
+    if (typeof exports === 'object') {//commonjs规范 
+        exports = f(exports)
+    } else if (typeof define === 'function' && define.amd) { //AMD/CMD标准
+        define([], f(root))
+    } else { // 浏览器
+        f(root) // 挂载全局
+    }
+})(this, function (root) {
+
     var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-
     function InvalidCharacterError(message) {
         this.message = message;
     }
     InvalidCharacterError.prototype = new Error;
     InvalidCharacterError.prototype.name = 'InvalidCharacterError';
-
-    // encoder
-    // [https://gist.github.com/999166] by [https://github.com/nignag]
-    object.btoa || (
-        object.btoa = function(input) {
+  
+    // 加密
+    root.btoa || (
+        root.btoa = function (input) {
             var str = String(input);
             for (
                 // initialize result and counter
@@ -34,10 +43,10 @@
             return output;
         });
 
-    // decoder
-    // [https://gist.github.com/1020396] by [https://github.com/atk]
-    object.atob || (
-        object.atob = function(input) {
+   
+    // 解密
+    root.atob || (
+        root.atob = function (input) {
             var str = String(input).replace(/=+$/, '');
             if (str.length % 4 == 1) {
                 throw new InvalidCharacterError("'atob' failed: The string to be decoded is not correctly encoded.");
@@ -48,7 +57,7 @@
                 // get next character
                 buffer = str.charAt(idx++);
                 // character found in table? initialize bit storage and add its ascii value;
-                ~ buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer,
+                ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer,
                     // and if not first of each 4 characters,
                     // convert the first 8 bits to one ascii character
                     bc++ % 4) ? output += String.fromCharCode(255 & bs >> (-2 * bc & 6)) : 0
@@ -58,5 +67,23 @@
             }
             return output;
         });
+
+
+    return {
+        btoa: btoa,
+        atob: atob,
+    }
+})
+
+
+
+
+
+
+
+
+;(function() {
+
+  
 
 }());
