@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>js前端加密</title>
+    <style>
+       *{
+           margin:0;
+           padding:0;
+           box-sizing: border-box;
+       }
+       #app{
+         width:100%;
+         padding:10px;
+       }
+       .inputOne{
+         height:50px;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+       }
+       
+       .inputOne .inp1{
+            width: 240px;
+            height: 25px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+       }
+       .inputOne .inp2{
+            padding:0 5px;
+            min-width: 240px;
+            height: 25px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+       }
+       input{
+           outline: none;
+           width:100%;
+           height:80%;
+           border:none;
+           text-indent: 10px;
+       }
+       .btnWrap{
+           width:350px;
+           margin:20px auto;
+           display: flex;
+           flex-wrap: wrap;
+           justify-content: center
+       }
+        .btnWrap button{
+            margin:10px;
+            padding:2px 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="inputOne">
+            <p>明文：</p>
+            <p class="inp1"><input type="text"></p> 
+        </div>
+        <div class="inputOne">
+            <p>结果：</p>
+            <p class="inp2"></p>
+        </div>
+        <div class="btnWrap">
+            <button onclick="encryption('sha1')">sha1加密</button>
+            <button>hmacSha1加密</button>
+            <button>sha256加密</button>
+            <button>base64加密(btoa)</button>
+            <button>base64解密(atob)</button>
+        </div>
+    </div>
+    <script src="../lib/sha1.min.js"></script>
+    <script src="../lib/sha256.min.js"></script>
+    <script src="../lib/md5.min.js"></script>
+    <script src="../lib/base64.min.js"></script>
+    <script>
+        var D = document;
+        var inp1 = D.querySelector(".inp1 input")
+        var inp2 = D.querySelector(".inp2")
+
+        function encryption(type){
+            var value = inp1.value;
+            if(!value){
+              alert("请输入要加密的明文字符串")
+            }
+           switch (type) {
+                case "sha1":
+                   inp2.innerHTML = sha1(value);
+                   break;
+                case "sha1":
+                   inp2.innerHTML = sha256(value);
+                   break;
+                case "sha1":
+                   inp2.innerHTML = md5(value);
+                   break;
+               case "sha1":
+                   inp2.innerHTML = btoa(value);
+                   break;
+               case "sha1":
+                   inp2.innerHTML = atob(value);
+                   break;
+           }
+        }
+
+    </script>
+</body>
+
+</html>

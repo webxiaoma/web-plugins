@@ -1,0 +1,27 @@
+{
+  "name": "@web-plugins/js-encryption",
+  "version": "1.0.0",
+  "description": "前端加密库",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "keywords": [
+    "js-encryption",
+    "@web-plugins/js-encryption",
+    "md5",
+    "sha1",
+    "base64"
+  ],
+  "author": "webxiaoma webwangjia",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webxiaoma/web-plugins/tree/master/packages/js-encryption"
+  },
+  "bugs": {
+    "url": "https://github.com/webxiaoma/web-plugins/issues"
+  },
+  "homepage": "https://webxiaoma.github.io/web-plugins/web-plugins/docs/blogs",
+  "license": "MIT"
+}

@@ -1,10 +1,11 @@
 {
-  "name": "pro-cli-docs",
+  "name": "web-plugins-docs",
   "version": "1.0.0",
-  "description": "",
+  "description": "前端插件文档",
   "main": "index.js",
   "scripts": {
-    "start": "npx vuepress dev ."
+    "start": "npx vuepress dev .",
+    "build": "npx vuepress build ."
   },
   "keywords": [
     "webxiaoma"

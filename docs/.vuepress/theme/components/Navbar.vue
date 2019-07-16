@@ -17,7 +17,7 @@
         class="site-name"
         v-if="$siteTitle"
         :class="{ 'can-hide': $site.themeConfig.logo }"
-      >马新想个人网站</span>
+      >{{$site.title}}</span>
     </a>
 
     <div

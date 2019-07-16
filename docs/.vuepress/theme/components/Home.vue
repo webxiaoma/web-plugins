@@ -7,7 +7,7 @@
         :alt="data.heroAlt || 'hero'"
       >
 
-      <h1>JavaScript插件库</h1>
+      <h1>前端插件库</h1>
 
       <h2 class="description">
         webxiaoma

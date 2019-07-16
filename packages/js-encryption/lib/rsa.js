@@ -62,8 +62,7 @@ if(typeof(pidCrypt) != 'undefined' &&
    typeof(BigInteger) != 'undefined' &&//must have for rsa
    typeof(SecureRandom) != 'undefined' &&//only needed for key generation
    typeof(Arcfour) != 'undefined'//only needed for key generation
-)
-{
+){
 
 //  Author: Tom Wu
 //  tjw@cs.Stanford.EDU
