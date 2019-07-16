@@ -16,7 +16,7 @@ meta:
 
 ## 版本
 
-当前版本`v1.0.0"` 
+当前版本`v1.0.1"` 
 
 ## 安装使用
 
@@ -44,7 +44,7 @@ md5("12345") //827ccb0eea8a706c4c34a16891f84e7b
 
 ```html
 <!-- 以下引入的md5加密方式（还可以引入的加密方法见下面） -->
-<script src="https://cdn.jsdelivr.net/npm/@web-plugins/js-encryption@1.0.0/lib/md5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@web-plugins/js-encryption@1.0.1/lib/md5.min.js"></script>
 
 <script>
 // 使用

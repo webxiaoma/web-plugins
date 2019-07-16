@@ -29,7 +29,7 @@ md5("12345") //827ccb0eea8a706c4c34a16891f84e7b
 
 ```html
 <!-- 以下引入的md5加密方式 -->
-<script src="https://cdn.jsdelivr.net/npm/@web-plugins/js-encryption@1.0.0/lib/md5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@web-plugins/js-encryption@1.0.1/lib/md5.min.js"></script>
 
 <script>
 // 使用
