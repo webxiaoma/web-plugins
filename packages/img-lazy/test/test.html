@@ -13,10 +13,20 @@
         .wrap>div{
             margin-bottom:10px;
         }
+        body{
+            height:6000px;
+        }
     </style>
 </head>
 <body>
     <div class="wrap">
+        <div style="margin-top:100px;position: relative;">
+            <div style="padding-top:200px;position: relative;">
+                <div id="one">
+
+                </div>
+            </div>
+        </div>
         <div>
             <img data-url="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1181679303,474549214&fm=27&gp=0.jpg" alt="">
         </div>
@@ -42,7 +52,7 @@
             <img data-url="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1777573870,2946191175&fm=85&app=63&f=JPEG?w=121&h=75&s=ADBC50957C483E474E36C8DC0300C0A8" alt="">
         </div>
         <div>
-            <img data-url="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1777573870,2946191175&fm=85&app=63&f=JPEG?w=121&h=75&s=ADBC50957C483E474E36C8DC0300C0A8" alt="">
+            <img id="img6" style="margin-top:200px" data-url="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1777573870,2946191175&fm=85&app=63&f=JPEG?w=121&h=75&s=ADBC50957C483E474E36C8DC0300C0A8" alt="">
         </div>
         <div>
             <img data-url="https://ss0.baidu.com/73F1bjeh1BF3odCf/it/u=1055397855,4145485269&fm=85" alt="">
@@ -70,13 +80,25 @@
     <script src="../lib/index.js"></script>
     <script>
 
+        function getElementToPageTop(el){
+            if (el.offsetParent) {
+                return this.getElementToPageTop(el.offsetParent) + el.offsetTop
+            }
+            return el.offsetTop
+        }
+        console.log(getElementToPageTop(document.getElementById("one")))
+        console.log(document.getElementById("one").offsetTop)
+        console.log(document.getElementById("one").offsetParent)
+    
         var imgLazy = new ImgLazy({
-              ladingLogo:"",
-              errorLogo:"",
+              loading:"",
+              error:"",
               baseUrl:"",
+              beforeDistance:"", // 提前加载距离
+
         })
         console.log(imgLazy)
-
+ 
     </script>
 </body>
 </html>

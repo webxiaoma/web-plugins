@@ -22,33 +22,103 @@
      **/
     function ImgLazy(option){
         this.options = option || {};// 全局配置
-        this.imgEle = []; // 存储所有图片对象
+        this.imgEles = []; // 存储所有图片对象
+        this.clientHeight = null;
 
         this.init() // 调用初始化方法
         return this;
     }
+    ImgLazy.prototype.startTime = null; // 页面滚动时函数节流起始时间
 
     ImgLazy.prototype.init = function (params) {
+
+        // 初始化数据
+        this.options.beforeDistance = this.options.beforeDistance ? this.options.beforeDistance:300;
+
+        this.monitorResize()
         this.monitorImg()
+        this.monitorScroll()
     }
 
-    //监听图片
+
+    //添加要监听图片
     ImgLazy.prototype.monitorImg = function() {
-        var D = document, // 存储document
-        imgEles = D.getElementsByTagName('img')  // 存储页面img dom
+        var imgEles = document.getElementsByTagName('img')  // 存储页面img dom
 
         for(var i = 0,len=imgEles.length;i<len;i++){
-            this.imgEle.push(
+            this.imgEles.push(
                 new Img(imgEles[i],this) // 传入img元素节点，this指ImgLazy的实例
             )
         }
     }
 
+    // 监听页面滚动
+    ImgLazy.prototype.monitorScroll = function() {
+        var runTime = 300; // 函数节流时间间隔
+        var slef = this;
+        window.addEventListener("scroll",function() {
+            var now = new Date();
+            
+            if (!slef.startTime){
+                slef.startTime = now;
+            }
+
+            if (now - slef.startTime > runTime){
+                //为了保证兼容性，这里取两个值，哪个有值取哪一个
+                //scrollTop就是触发滚轮事件时滚轮的高度
+                slef.mapImg();
+                slef.startTime = now;
+            }         
+
+        })
+    }
+
+    // 监听页面尺寸变化
+    ImgLazy.prototype.monitorResize = function(){
+        var D = document;
+        var slef = this;
+        this.clientHeight = D.documentElement.clientHeight
+        window.addEventListener("resize",function () {
+            slef.clientHeight = D.documentElement.clientHeight
+        })
+    }
+
+
+    // 遍历检测图片
+    ImgLazy.prototype.mapImg = function () {
+        // 滚动距离
+
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        for(var i = 0,len=this.imgEles.length;i<len;i++){
+            var imgTop = this.getElementToPageTop(this.imgEles[i].el)
+
+            console.log(imgTop)
+            if (imgTop - scrollTop - this.options.beforeDistance < this.clientHeight){ // 加载区
+
+            }
+             
+
+        }
+
+        console.log(this.clientHeight)
+        console.log("滚动距离" + scrollTop);
+    }
+
+    // 获取元素距离文档顶部的高度
+    ImgLazy.prototype.getElementToPageTop = function(el) {
+        if (el.offsetParent) {
+            return this.getElementToPageTop(el.offsetParent) + el.offsetTop
+        }
+        return el.offsetTop
+    }
+ 
+
     /**
      * @msg  图片构造函数
      **/
     function Img(imgNode,parent) {
-        this.imgNode = imgNode; // 图片元素节点
+        this.el = imgNode; // 图片元素节点
         this.url = ""; // 图片路径
         this.status = ""; // 图片状态 loading success error
         this.parent = parent; // ImgLazy的实例
@@ -58,12 +128,12 @@
 
     // 初始化
     Img.prototype.init = function () {
-        this.url = this.imgNode.getAttribute("data-url");
+        this.url = this.el.getAttribute("data-url");
     }
 
     // load img
     Img.prototype.load = function (params) {
-        this.imgNode.setAttribute("src",this.url)
+        this.el.setAttribute("src",this.url)
     }
 
     Img.prototype.addEvent = function (params) {
@@ -71,7 +141,10 @@
         // load error
     }
 
-   
+    // 是否在可加载区
+    Img.prototype.isInSigh = function(){
+
+    }
 
     return ImgLazy
 });
