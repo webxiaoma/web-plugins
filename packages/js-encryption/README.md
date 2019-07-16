@@ -7,7 +7,7 @@
 
 本仓库为前端加密库，会不定时更新
 
-其它相关信息请访问[js-encryption 相关的使用文档](https://webxiaoma.github.io/web-plugins/web-plugins/docs/blogs/js-plugins/js-encryption.html)
+其它相关信息请访问[js-encryption 相关的使用文档](https://webxiaoma.github.io/web-plugins/docs/blogs/js-plugins/js-encryption.html)
 
 
 ## 安装使用
