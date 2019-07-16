@@ -8,4 +8,6 @@
 
 ## 插件
 
-- [img-lazy 图片懒加载插件（含js与vue）](./packages/img-lazy)
+- [js-encryption 加密插件](./packages/js-encryption)
+- [img-lazy 图片懒加载插件](./packages/img-lazy)
+
