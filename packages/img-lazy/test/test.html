@@ -11,6 +11,8 @@
             padding:0;
         }
         .wrap>div{
+            min-height:400px;
+            width:100%;
             margin-bottom:10px;
         }
         body{
@@ -28,31 +30,31 @@
             </div>
         </div>
         <div>
-            <img data-url="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1181679303,474549214&fm=27&gp=0.jpg" alt="">
+            <img data-url="http://e.hiphotos.baidu.com/image/pic/item/b17eca8065380cd7cd63680aaf44ad34588281dc.jpg" alt="">
         </div>
         <div>
-            <img data-url="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2887789243,2048380160&fm=27&gp=0.jpg" alt="">
+            <img data-url="http://a.hiphotos.baidu.com/image/pic/item/0b7b02087bf40ad15a962c0b592c11dfa8ecceec.jpg" alt="">
         </div>
         <div>
-            <img data-url="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3928911940,769051781&fm=27&gp=0.jpg" alt="">
+            <img data-url="http://a.hiphotos.baidu.com/image/pic/item/e61190ef76c6a7efcefee3c3f3faaf51f2de667e.jpg" alt="">
         </div>
         <div>
-            <img data-url="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2692188675,4084165957&fm=27&gp=0.jpg" alt="">
+            <img data-url="http://a.hiphotos.baidu.com/image/pic/item/4a36acaf2edda3ccdc0347c30fe93901203f926a.jpg" alt="">
         </div>
         <div>
-            <img data-url="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2069099295,1295724631&fm=27&gp=0.jpg" alt="">
+            <img data-url="http://h.hiphotos.baidu.com/image/pic/item/3812b31bb051f819d11590aed4b44aed2e73e726.jpg" alt="">
         </div>
         <div>
-            <img data-url="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1441660647,1920724672&fm=27&gp=0.jpg" alt="">
+            <img data-url="http://e.hiphotos.baidu.com/image/pic/item/4610b912c8fcc3cef70d70409845d688d53f20f7.jpg" alt="">
         </div>
         <div>
-            <img data-url="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=832082262,2317068098&fm=85&app=63&f=JPEG?w=121&h=75&s=1404D11428E1D4942F14BD57030080E2" alt="">
+            <img data-url="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563343422168&di=4dce47563aa99584244302599f59dca7&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Fcd2476300bbad8dfcfff1d277b79401a.jpeg" alt="">
         </div>
         <div>
-            <img data-url="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1777573870,2946191175&fm=85&app=63&f=JPEG?w=121&h=75&s=ADBC50957C483E474E36C8DC0300C0A8" alt="">
+            <img data-url="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563343422168&di=05cf8bc3858820c49838692d11906709&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201801%2F13%2F20180113215940_VTkFe.jpeg" alt="">
         </div>
         <div>
-            <img id="img6" style="margin-top:200px" data-url="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1777573870,2946191175&fm=85&app=63&f=JPEG?w=121&h=75&s=ADBC50957C483E474E36C8DC0300C0A8" alt="">
+            <img id="img6" style="margin-top:200px" data-url="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563343422168&di=9f7ab4dabdca5e8c4c07f25ac37d2829&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201411%2F16%2F20141116124947_xBNxM.jpeg" alt="">
         </div>
         <div>
             <img data-url="https://ss0.baidu.com/73F1bjeh1BF3odCf/it/u=1055397855,4145485269&fm=85" alt="">
@@ -75,7 +77,6 @@
         <div>
             <img data-url="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=51181103,3927861887&fm=85&app=63&f=JPEG?w=121&h=75&s=E0ABBD575443A70F2E1F75770300E038" alt="">
         </div>
-        
     </div>
     <script src="../lib/index.js"></script>
     <script>
@@ -91,11 +92,21 @@
         console.log(document.getElementById("one").offsetParent)
     
         var imgLazy = new ImgLazy({
-              loading:"",
-              error:"",
+              loadingLogo:"", // 绝对路径
+              errorLogo:"",   // 绝对路径
               baseUrl:"",
               beforeDistance:"", // 提前加载距离
 
+              /*
+                 错误时开启轮询请求图片
+                 默认开启，图片加载不成功时每五秒请求一次，一共请求五次，false为关闭
+                 可以为对象进行设置：
+                 {
+                     time:5000, 单位毫秒
+                     number:5,  
+                 }
+              */
+              polling:true, 
         })
         console.log(imgLazy)
  
