@@ -20,23 +20,23 @@
     /**
      * @msg  ImgLazy构造函数 **************************************
      **/
-    function ImgLazy(option){
+    function ImgLazy(options){
         this.options = objAssign({
             loadingLogo: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAOVBMVEUAAABwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHCwizOmAAAAEnRSTlMA8BDQsDBQoCBggJBw38B/v0AcgxLZAAAA2ElEQVQ4y72T2xKDIAxECQZQtFr3/z+2uMX7IE/tjjM+5AgnEUyDxzQGlZj0PORngJ8m/wBYNva2RUAB1USUgBbijHGCuQB46PLqES+AOwPxCvToti1amvoT4AG4FZVpeqE5SVqB4GUJWOVfOrepGNOimjXmGC+D8su+TjAURt1+S13WuAMjxqxHDY776DCwsZREaq4fR90KW2YhayhEEFaA9jmOGgHiknLMAMTuVkPSCEBH5S4Dfq/za9ZJOAL97biEjSVgL+dBwrZa9dg3NcD+6eJUUr3+HxW1GKFZCQaQAAAAAElFTkSuQmCC", // 图片加载前路径绝对路径
             errorLogo: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAOVBMVEUAAABwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHCwizOmAAAAEnRSTlMA8BDQsDBQoCBggJBw38B/v0AcgxLZAAAA2ElEQVQ4y72T2xKDIAxECQZQtFr3/z+2uMX7IE/tjjM+5AgnEUyDxzQGlZj0PORngJ8m/wBYNva2RUAB1USUgBbijHGCuQB46PLqES+AOwPxCvToti1amvoT4AG4FZVpeqE5SVqB4GUJWOVfOrepGNOimjXmGC+D8su+TjAURt1+S13WuAMjxqxHDY776DCwsZREaq4fR90KW2YhayhEEFaA9jmOGgHiknLMAMTuVkPSCEBH5S4Dfq/za9ZJOAL97biEjSVgL+dBwrZa9dg3NcD+6eJUUr3+HxW1GKFZCQaQAAAAAElFTkSuQmCC",   // 绝对路径
             baseUrl: "",
             beforeDistance: 300, // 提前加载距离
             polling:true, // 可为对象
-        },option)// 全局配置
+        },options)// 全局配置
         this.imgEles = []; // 存储所有图片对象
-        this.clientHeight = null;
+        this.clientHeight = null; // 存储浏览器可视高度
         this.startTime = null; // 页面滚动时函数节流起始时间
 
         this.init() // 调用初始化方法
         return this;
     }
 
-    ImgLazy.prototype.init = function (params) {
+    ImgLazy.prototype.init = function () {
         // 初始化数据
         this.monitorResize() // 监听窗口
         this.monitorImg()    // 加载监听img
@@ -60,10 +60,11 @@
         var start = true;
         window.addEventListener("scroll",function() {
             // 刚进入页面时执行一遍mapImg()
-            if (start){
+            if (start){ // 有问题，待解决
                 slef.mapImg();
                 start = false;
-             }
+            }
+
             var now = new Date();
             
             if (!slef.startTime){
@@ -84,19 +85,21 @@
     ImgLazy.prototype.monitorResize = function(){
         var D = document;
         var slef = this;
+        // 存储浏览器可是高度
         this.clientHeight = D.documentElement.clientHeight
+        // 窗口大小变化时存储浏览器可是高度
         window.addEventListener("resize",function () {
             slef.clientHeight = D.documentElement.clientHeight
         })
     }
 
-    // 遍历检测图片
+    // 遍历检测图片是否到达可视区域
     ImgLazy.prototype.mapImg = function () {
         // 滚动距离
         var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         for(var i = 0,len=this.imgEles.length;i<len;i++){
             var imgEl = this.imgEles[i]
-            var imgTop = this.getElementToPageTop(imgEl.el)
+            var imgTop = this.getElementToPageTop(imgEl.el) // 图片顶部距离可视区顶部的距离
             if (imgTop - scrollTop - this.options.beforeDistance < this.clientHeight){ // 加载区
                 imgEl.load()
             }
@@ -138,8 +141,8 @@
                    : this.el.getAttribute("data-url");
         
    
-        this.el.src = this.options.loadingLogo // 添加占位图片
-        this.monitorStatus()
+        this.el.src = this.options.loadingLogo; // 添加占位图片
+        this.monitorStatus();
     }
 
     // 加载 img
