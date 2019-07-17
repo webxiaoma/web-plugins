@@ -69,10 +69,11 @@
         </div>
         <div class="btnWrap">
             <button onclick="encryption('sha1')">sha1加密</button>
-            <button>hmacSha1加密</button>
-            <button>sha256加密</button>
-            <button>base64加密(btoa)</button>
-            <button>base64解密(atob)</button>
+            <button onclick="encryption('hmacSha1')">hmacSha1加密</button>
+            <button onclick="encryption('md5')">md5加密</button>
+            <button onclick="encryption('sha256')">sha256加密</button>
+            <button onclick="encryption('btoa')">base64加密(btoa)</button>
+            <button onclick="encryption('atob')">base64解密(atob)</button>
         </div>
     </div>
     <script src="../lib/sha1.min.js"></script>
@@ -93,16 +94,19 @@
                 case "sha1":
                    inp2.innerHTML = sha1(value);
                    break;
-                case "sha1":
+               case "hmacSha1":
+                   inp2.innerHTML = hmacSha1(value);
+                   break;
+                case "sha256":
                    inp2.innerHTML = sha256(value);
                    break;
-                case "sha1":
+                case "md5":
                    inp2.innerHTML = md5(value);
                    break;
-               case "sha1":
+               case "btoa":
                    inp2.innerHTML = btoa(value);
                    break;
-               case "sha1":
+               case "atob":
                    inp2.innerHTML = atob(value);
                    break;
            }
