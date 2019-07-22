@@ -50,10 +50,7 @@ var imgList = [{
 
 
 
-
-
 window.onload = function() {
-
     function img(url) { //创建函数
         this.url = url
         console.log(url)
